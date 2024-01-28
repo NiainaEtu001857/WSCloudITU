@@ -1,6 +1,6 @@
 -- Insertion dans la table "comission"
-INSERT INTO comission (taux) VALUES 
-    (5); -- en %
+INSERT INTO comission (taux, datecomission) VALUES 
+    (5, default); -- en %
 
 -- Insertion dans la table "utilisateur"
 INSERT INTO utilisateur (nom, prenom, genre, date_naissance, email, mdp, roles)

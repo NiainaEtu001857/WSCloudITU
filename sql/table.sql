@@ -13,7 +13,8 @@ create table token(
 
 create table comission(
     id_comission serial primary key,
-    taux double precision not null
+    taux double precision not null,
+    datecomission date default now()
 );
 
 create table utilisateur(
