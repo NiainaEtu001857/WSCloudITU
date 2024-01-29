@@ -1,5 +1,8 @@
 package com.spring.controller;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -216,13 +219,17 @@ public class AnnonceController {
             Long userId = Long.parseLong(claims.get("idUtilisateur").toString());
 
             annonce.setVendeurId(userId);
+            annonce.setStatut(1);
             voitureService.addVoiture(annonce.getVoiture());
             Long idVoiture = voitureService.getLatestId(); // Id du dernier voiture ajoutee
             annonce.setVoitureId(idVoiture);
+            LocalDate currentDate = LocalDate.now();
+            annonce.setDateAnnonce(Date.valueOf(currentDate));
             annonceService.addAnnonce(annonce);
             Long idAnnonce = annonceService.getLatestId(); // Id du dernier annonce ajoutee
             annonce.getInfoAnnonce().setAnnonce_id(idAnnonce.toString());
             annonce.getInfoAnnonce().setAuteur_id(userId.toString());
+            annonce.getInfoAnnonce().setStatut(Long.parseLong("1"));
             annonce.getInfoAnnonce()
                     .setDetailvoitureANDInit(annonceDetailViewService.getAnnonceDetailViewById(idAnnonce).get());
 
