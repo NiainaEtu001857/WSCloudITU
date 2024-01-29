@@ -34,7 +34,7 @@ public class PhotoService {
         Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
         storage.create(blobInfo, Files.readAllBytes(file.toPath()));
 
-        String DOWNLOAD_URL = "https://firebasestorage.googleapis.com/v0/b/bucketName/o/%s?alt=media";
+        String DOWNLOAD_URL = "https://firebasestorage.googleapis.com/v0/b/" + bucketName + "/o/%s?alt=media";
         return String.format(DOWNLOAD_URL, URLEncoder.encode(fileName, StandardCharsets.UTF_8));
     }
 
