@@ -1,5 +1,7 @@
 package com.spring.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -80,6 +82,7 @@ public class DiscussionController {
             Claims claims = tokenService.getClaims(authorizationHeader);
             String userid = claims.get("idUtilisateur").toString();
             message.setEmetteur(claims.get("nomPrenom").toString());
+            message.setDate(new Date());
             discussionService.addMessageToDiscussion(userid, participant2, message);
             response.setStatus_code("200");
             response.setData(discussionService.getPrivateDiscussion(userid, participant2));
