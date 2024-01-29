@@ -1,6 +1,5 @@
 package com.spring.models;
 
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -57,12 +56,11 @@ public class InfoAnnonce {
         this.auteur_id = auteur_id;
     }
 
-    
     public String getDescription() {
         return description;
     }
 
-     public Long getPrix_vente() {
+    public Long getPrix_vente() {
         return prix_vente;
     }
 
@@ -125,13 +123,14 @@ public class InfoAnnonce {
     public DetailVoiture getDetailvoiture() {
         return detailvoiture;
     }
-    
+
     public void setDetailvoiture(DetailVoiture detailVoiture) {
         this.detailvoiture = detailVoiture;
     }
 
     public void setDetailvoitureANDInit(AnnonceDetailView detailAnnonce) {
         this.detailvoiture = new DetailVoiture(detailAnnonce);
+        this.statut = (long) 1;
         detailAnnonce.init(this);
         // System.out.println(" ** We init infoAnnonce value ** ");
     }

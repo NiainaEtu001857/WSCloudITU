@@ -62,5 +62,4 @@ drop table voiture;
  drop table model;
  drop table marque;
  drop table categorie;
-
  drop table utilisateur;
