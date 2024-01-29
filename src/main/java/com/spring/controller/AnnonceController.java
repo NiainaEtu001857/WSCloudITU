@@ -230,6 +230,7 @@ public class AnnonceController {
             annonce.getInfoAnnonce().setAnnonce_id(idAnnonce.toString());
             annonce.getInfoAnnonce().setAuteur_id(userId.toString());
             annonce.getInfoAnnonce().setStatut(Long.parseLong("1"));
+            annonce.getInfoAnnonce().setDate_annonce(Date.valueOf(currentDate));
             annonce.getInfoAnnonce()
                     .setDetailvoitureANDInit(annonceDetailViewService.getAnnonceDetailViewById(idAnnonce).get());
 
