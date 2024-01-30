@@ -263,6 +263,7 @@ public class AnnonceController {
             Long idAnnonce = annonceService.getLatestId(); // Id du dernier annonce ajoutee
             annonce.getInfoAnnonce().setAnnonce_id(idAnnonce.toString());
             annonce.getInfoAnnonce().setAuteur_id(userId.toString());
+            annonce.getInfoAnnonce().setStatut((long) 1);
             annonce.getInfoAnnonce()
                     .setDetailvoitureANDInit(annonceDetailViewService.getAnnonceDetailViewById(idAnnonce).get());
 
@@ -345,14 +346,25 @@ public class AnnonceController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Response> updateAnnonce(@PathVariable Long id,
-            @RequestBody Annonce newAnnonce,
+    @PutMapping
+    public ResponseEntity<Response> updateAnnonce(
+            @RequestBody Annonce annonce,
             @RequestHeader("Authorization") String authorizationHeader) {
         Response response = new Response();
         try {
-            tokenService.checkRole(authorizationHeader, 1);
-            response.setData(annonceService.updateAnnonce(newAnnonce));
+            tokenService.checkSansRole(authorizationHeader);
+
+            annonce = annonceService.updateAnnonce(annonce);
+            annonce.setVoiture(voitureService.updateVoiture(annonce.getVoiture()));
+            annonce.getInfoAnnonce().setDetailvoitureANDInit(
+                    annonceDetailViewService.getAnnonceDetailViewById(annonce.getIdAnnonce()).get());
+
+            // Uploader les photos vers firebase et avoir les liens vers mongodb
+            // photoService.uploadAll(annonce.getInfoAnnonce().getPhotos());
+
+            infoAnnonceService.updateInfoAnnonce(annonce.getInfoAnnonce());
+
+            response.setData(annonceService.updateAnnonce(annonce));
             response.setStatus_code("200");
             response.setMessage("update réussi");
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -368,8 +380,17 @@ public class AnnonceController {
             @RequestHeader("Authorization") String authorizationHeader) {
         Response response = new Response();
         try {
-            tokenService.checkRole(authorizationHeader, 10);
+            tokenService.checkSansRole(authorizationHeader);
+
+            Claims claims = tokenService.getClaims(authorizationHeader);
+            Long userId = Long.parseLong(claims.get("idUtilisateur").toString());
+            Annonce annonce = annonceService.getAnnonceById(id);
+            annonce.checkAuthorization(userId);
+
             annonceService.deleteAnnonce(id);
+            voitureService.deleteVoiture(annonce.getVoitureId());
+            infoAnnonceService.deleteInfoAnnonce(id.toString());
+
             response.setStatus_code("200");
             response.setMessage("Suppression réussi");
             return new ResponseEntity<>(response, HttpStatus.OK);

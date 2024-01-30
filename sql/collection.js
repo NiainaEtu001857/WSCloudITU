@@ -222,7 +222,8 @@ db.infoannonce.insertOne({
       contentType: "image/jpeg"
     }
   ]
-});
+})
+
 
 db.infoannonce.insertOne({
   annonce_id: "2",
@@ -261,7 +262,8 @@ db.infoannonce.insertOne({
       contentType: "image/jpeg"
     }
   ]
-});
+})
+
 
 db.infoannonce.insertOne({
   annonce_id: "3",
@@ -300,7 +302,8 @@ db.infoannonce.insertOne({
       contentType: "image/jpeg"
     }
   ]
-});
+})
+
 
 db.infoannonce.insertOne({
   annonce_id: "4",
@@ -378,7 +381,9 @@ db.infoannonce.insertOne({
       contentType: "image/jpeg"
     }
   ]
-});
+})
+
+
 
 db.infoannonce.insertOne({
   annonce_id: "6",
@@ -417,7 +422,9 @@ db.infoannonce.insertOne({
       contentType: "image/jpeg"
     }
   ]
-});
+})
+
+
 
 db.infoannonce.insertOne({
   annonce_id: "7",
@@ -456,7 +463,9 @@ db.infoannonce.insertOne({
       contentType: "image/jpeg"
     }
   ]
-});
+})
+
+
 
 db.infoannonce.insertOne({
   annonce_id: "8",
@@ -495,7 +504,9 @@ db.infoannonce.insertOne({
       contentType: "image/jpeg"
     }
   ]
-});
+})
+
+
 
 db.infoannonce.insertOne({
   annonce_id: "9",

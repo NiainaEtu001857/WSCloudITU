@@ -1,5 +1,6 @@
 package com.spring.models;
 
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -25,6 +26,15 @@ public class InfoAnnonce {
     private String description;
     private List<Propriete> proprietes;
     private List<Photo> photos;
+
+    public void updateTo(InfoAnnonce news) {
+        this.setDescription(news.getDescription());
+        this.setProprietes(news.getProprietes());
+        this.setPrix_vente(news.getPrix_vente());
+        this.setLieu(news.getLieu());
+        this.detailvoiture = news.getDetailvoiture();
+        // this.setPhotos(news.getPhotos());
+    }
 
     public InfoAnnonce(String annonce_id, String description) {
         this.description = description;
@@ -56,19 +66,22 @@ public class InfoAnnonce {
         this.auteur_id = auteur_id;
     }
 
+    
     public String getDescription() {
         return description;
     }
 
-    public Long getPrix_vente() {
+     public Long getPrix_vente() {
         return prix_vente;
     }
 
     public void setPrix_vente(Long prix_vente) {
+        if(prix_vente != null)
         this.prix_vente = prix_vente;
     }
 
     public void setDescription(String description) {
+        if(description != null)
         this.description = description;
     }
 
@@ -77,6 +90,7 @@ public class InfoAnnonce {
     }
 
     public void setProprietes(List<Propriete> proprietes) {
+        if(proprietes != null)
         this.proprietes = proprietes;
     }
 
@@ -85,6 +99,7 @@ public class InfoAnnonce {
     }
 
     public void setPhotos(List<Photo> photos) {
+        if(photos != null)
         this.photos = photos;
     }
 
@@ -123,14 +138,13 @@ public class InfoAnnonce {
     public DetailVoiture getDetailvoiture() {
         return detailvoiture;
     }
-
+    
     public void setDetailvoiture(DetailVoiture detailVoiture) {
         this.detailvoiture = detailVoiture;
     }
 
     public void setDetailvoitureANDInit(AnnonceDetailView detailAnnonce) {
         this.detailvoiture = new DetailVoiture(detailAnnonce);
-        this.statut = (long) 1;
         detailAnnonce.init(this);
         // System.out.println(" ** We init infoAnnonce value ** ");
     }

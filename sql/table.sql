@@ -74,7 +74,7 @@ create table lieu(
 create table voiture(
     id_voiture serial primary key,
     model_id int references model(id_model),
-    matricule varchar(70) unique not null,
+    matricule varchar(70) not null,
     kilometrage double precision not null,
     modelcarburant_id int references modelcarburant(id_modelcarburant),
     anneesortie_id int references anneesortie(id_anneesortie)
