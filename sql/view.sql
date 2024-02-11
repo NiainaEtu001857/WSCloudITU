@@ -51,6 +51,7 @@ select
     lieu.lieu,
     annonce.prix_vente,
     annonce.date_annonce,
+    model.model,
     voiture.matricule,
     voiture.kilometrage,
     marque.marque,
@@ -70,7 +71,6 @@ from
     join carburant on carburant.id_carburant = modelcarburant.carburant_id;
 
 
-
 create view v_effectifstat as
 SELECT
     ROW_NUMBER() OVER () AS id,
@@ -79,7 +79,7 @@ SELECT
     (SELECT COUNT(id_annonce) FROM annonce WHERE statut = 2) AS total_annonce,
     (SELECT COUNT(id_vente) FROM vente) AS total_vente;
 
-create view v_statannoncemois as
+/*create view v_statannoncemois as
 SELECT
     ROW_NUMBER() OVER () AS id,
     EXTRACT(YEAR FROM date_annonce) AS annee,
@@ -90,6 +90,24 @@ FROM
     annonce
 GROUP BY
     annee, mois, statut;
+*/
+
+--------------- modif 
+create view v_statannoncemois as
+SELECT
+    ROW_NUMBER() OVER () AS id,
+    COALESCE(EXTRACT(YEAR FROM date_confirmation), EXTRACT(YEAR FROM date_annonce), 0) AS annee,
+    COALESCE(EXTRACT(MONTH FROM date_confirmation), EXTRACT(MONTH FROM date_annonce), 0) AS mois,
+    COALESCE(statut, 1) AS statut,
+    COUNT(id_annonce) AS nombre_annonces
+FROM
+
+    annonce
+GROUP BY
+    annee, mois, statut;
+
+
+
 
 
 create view v_statventemois as

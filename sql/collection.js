@@ -11,7 +11,14 @@ db.createCollection("discussions", {
           bsonType: "array",
           items: {
             bsonType: "string",
-            description: "Noms des participants"
+            description: "id des participants"
+          }
+        },
+        nomparticipants: {
+          bsonType: "array",
+          items: {
+            bsonType: "string",
+            description: "nom des participants"
           }
         },
         messages: {
@@ -20,6 +27,10 @@ db.createCollection("discussions", {
             bsonType: "object",
             required: ["emetteur", "contenu", "date"],
             properties: {
+              idemetteur: {
+                bsonType: "string",
+                description: "id de l'expéditeur du message"
+              },
               emetteur: {
                 bsonType: "string",
                 description: "Nom de l'expéditeur du message"
@@ -78,6 +89,10 @@ db.createCollection("infoannonce", {
           bsonType: "object",
           required: ["marque"],
           properties: {
+            model: {
+              bsonType: "string",
+              description: "model"
+            },
             matricule: {
               bsonType: "string",
               description: "matricule"
@@ -152,32 +167,37 @@ db.createCollection("infoannonce", {
       }
     }
   }
-})
+});
 
 
 //  Insérer dans discussion
 db.discussions.insertOne({
-  participants: ["1", "2"],
+  participants: ["2", "3"],
+  nomparticipants: ["RANDRIA  Malala", "RAKOTO  Nirina"],
   messages: [
     {
-      emetteur: "Alice",
-      contenu: "Bonjour Bob",
+      idemetteur: "2",
+      emetteur: "RANDRIA  Malala",
+      contenu: "Bonjour RAKOTO   Nirina",
       date: new Date()
     },
     {
-      emetteur: "Bob",
-      contenu: "salut! quoi de neuf?",
+      idemetteur: "3",
+      emetteur: "RAKOTO  Nirina",
+      contenu: "salut! RANDRIA  Malala",
       date: new Date()
     }
   ]
-});
+})
 
 db.discussions.insertOne({
   participants: ["1", "3"],
+  nomparticipants: ["Mr Admin", "RAKOTO  Nirina"],
   messages: [
     {
-      emetteur: "Alice",
-      contenu: "Bonjour John",
+      idemetteur: "1",
+      emetteur: "Mr Admin",
+      contenu: "Bonjour Nirina",
       date: new Date()
     }
   ]
@@ -194,6 +214,7 @@ db.infoannonce.insertOne({
   prix_vente: NumberLong(75000000),
   date_annonce: ISODate('2024-01-10T12:30:00.668Z'),
   detailvoiture: {
+    model: "Mazda CX3",
     matricule: "ABC123",
     kilometrage: NumberLong(5000),
     marque: "Mazda",
@@ -214,16 +235,15 @@ db.infoannonce.insertOne({
   ],
   photos: [
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/04e0e1be-f60f-4cfc-b199-866365f3aaa5.jpg?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/2024_mazda_3-1.jpg?alt=media",
       contentType: "image/jpeg"
     },
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/95b2588c-e6f8-4551-81c7-eafc0df962bc.jpg?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/2024_mazda_3-2.jpg?alt=media",
       contentType: "image/jpeg"
     }
   ]
-})
-
+});
 
 db.infoannonce.insertOne({
   annonce_id: "2",
@@ -234,6 +254,7 @@ db.infoannonce.insertOne({
   prix_vente: NumberLong(120000000),
   date_annonce: ISODate('2024-01-12T15:55:12.668Z'),
   detailvoiture: {
+    model: "Audi Q8",
     matricule: "DEF456",
     kilometrage: NumberLong(7500),
     marque: "Audi",
@@ -254,16 +275,15 @@ db.infoannonce.insertOne({
   ],
   photos: [
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/df997a3c-d3c9-496e-990d-adf04b29d596.jpg?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/Audi_Q8_-1.jpg?alt=media",
       contentType: "image/jpeg"
     },
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/b9020d3f-30c1-4c26-8ede-73bd872d5777.jpeg?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/Audi_Q8_-2.jpeg?alt=media",
       contentType: "image/jpeg"
     }
   ]
-})
-
+});
 
 db.infoannonce.insertOne({
   annonce_id: "3",
@@ -274,6 +294,7 @@ db.infoannonce.insertOne({
   prix_vente: NumberLong(90000000),
   date_annonce: ISODate('2024-01-15T09:15:32.668Z'),
   detailvoiture: {
+    model: "Cayenne Turbo GT",
     matricule: "GHI789",
     kilometrage: NumberLong(15000),
     marque: "Porsche",
@@ -294,16 +315,15 @@ db.infoannonce.insertOne({
   ],
   photos: [
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/60d2eeed-4846-4bd4-be9b-cef3f111504f.jpg?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/cayenne-turbo-gt-1.jpg?alt=media",
       contentType: "image/jpeg"
     },
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/fd6c7dce-0195-4a11-a5d7-e9f9f95de532.jpg?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/cayenne-turbo-gt-2.jpg?alt=media",
       contentType: "image/jpeg"
     }
   ]
-})
-
+});
 
 db.infoannonce.insertOne({
   annonce_id: "4",
@@ -314,6 +334,7 @@ db.infoannonce.insertOne({
   prix_vente: NumberLong(68000000),
   date_annonce: ISODate('2024-01-25T19:00:45.668Z'),
   detailvoiture: {
+    model: "Ford Ranger",
     matricule: "JKL012",
     kilometrage: NumberLong(3000),
     marque: "Ford",
@@ -334,11 +355,11 @@ db.infoannonce.insertOne({
   ],
   photos: [
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/6f98f0ce-e734-4948-8c15-cbf42b5548a1.jpg?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/ford-ranger-1.jpg?alt=media",
       contentType: "image/jpeg"
     },
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/9e59b534-fe3e-40da-ae75-e898111bff85.jpeg?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/ford-ranger-2.jpeg?alt=media",
       contentType: "image/jpeg"
     }
   ]
@@ -353,6 +374,7 @@ db.infoannonce.insertOne({
   prix_vente: NumberLong(100000000),
   date_annonce: ISODate('2024-01-18T14:20:18.668Z'),
   detailvoiture: {
+    model: "Mazda BT-50",
     matricule: "MNO345",
     kilometrage: NumberLong(6000),
     marque: "Mazda",
@@ -373,17 +395,15 @@ db.infoannonce.insertOne({
   ],
   photos: [
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/1bea87d6-a217-4683-8d15-7d0763a85c39.jpg?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/Mazda_BT_50-1.jpg?alt=media",
       contentType: "image/jpeg"
     },
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/e956d187-3b85-4b2c-a020-60f7cc4b79a9.jpg?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/Mazda_BT_50-2.jpg?alt=media",
       contentType: "image/jpeg"
     }
   ]
-})
-
-
+});
 
 db.infoannonce.insertOne({
   annonce_id: "6",
@@ -394,6 +414,7 @@ db.infoannonce.insertOne({
   prix_vente: NumberLong(110500000),
   date_annonce: ISODate('2024-01-10T12:30:42.668Z'),
   detailvoiture: {
+    model: "",
     matricule: "PQR678",
     kilometrage: NumberLong(12500),
     marque: "Range Rover",
@@ -414,17 +435,15 @@ db.infoannonce.insertOne({
   ],
   photos: [
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/9fc67c7f-f46e-49a9-8e32-a8e0d040ba6c.jpg?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/range-rover-1.jpg?alt=media",
       contentType: "image/jpeg"
     },
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/5448493a-d53d-46ef-ac03-449566052edb.jpg?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/range-rover-2.jpg?alt=media",
       contentType: "image/jpeg"
     }
   ]
-})
-
-
+});
 
 db.infoannonce.insertOne({
   annonce_id: "7",
@@ -435,6 +454,7 @@ db.infoannonce.insertOne({
   prix_vente: NumberLong(60000000),
   date_annonce: ISODate('2024-01-12T15:45:15.668Z'),
   detailvoiture: {
+    model: "RAV-4",
     matricule: "MAD005",
     kilometrage: NumberLong(7000),
     marque: "Toyota",
@@ -455,17 +475,15 @@ db.infoannonce.insertOne({
   ],
   photos: [
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/07ab8265-7a29-4b34-a80c-985a43e163be.jpg?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/RAV4-1.jpg?alt=media",
       contentType: "image/jpeg"
     },
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/eb4515b1-e8a4-41ab-9eba-c8f146c9721c.webp?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/rav4-2.webp?alt=media",
       contentType: "image/jpeg"
     }
   ]
-})
-
-
+});
 
 db.infoannonce.insertOne({
   annonce_id: "8",
@@ -476,6 +494,7 @@ db.infoannonce.insertOne({
   prix_vente: NumberLong(65000000),
   date_annonce: ISODate('2024-01-15T14:20:12.668Z'),
   detailvoiture: {
+    model: "BMW i5",
     matricule: "YZA567",
     kilometrage: NumberLong(3450),
     marque: "BMW",
@@ -496,17 +515,15 @@ db.infoannonce.insertOne({
   ],
   photos: [
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/8cc90d72-e1e2-4ce4-9b2c-bd14287948f2.jpg?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/S0-bmw-i5-1.jpg?alt=media",
       contentType: "image/jpeg"
     },
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/270b8dbe-d4a2-4dd9-a9e4-c85603846cb1.jpg?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/S0-bmw-i5-2.jpg?alt=media",
       contentType: "image/jpeg"
     }
   ]
-})
-
-
+});
 
 db.infoannonce.insertOne({
   annonce_id: "9",
@@ -517,6 +534,7 @@ db.infoannonce.insertOne({
   prix_vente: NumberLong(58000000),
   date_annonce: ISODate('2024-01-18T19:09:35.668Z'),
   detailvoiture: {
+    model: "Subaru",
     matricule: "VWX234",
     kilometrage: NumberLong(25000),
     marque: "Subaru",
@@ -537,11 +555,11 @@ db.infoannonce.insertOne({
   ],
   photos: [
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/0784ee58-7556-438e-9958-6286b18ebd19.jpg?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/subaru-1.jpg?alt=media",
       contentType: "image/jpeg"
     },
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/15fd4ac9-3451-4c3a-a463-fdf51cafe2e8.jpg?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/subaru-2.jpg?alt=media",
       contentType: "image/jpeg"
     }
   ]
@@ -556,6 +574,7 @@ db.infoannonce.insertOne({
   prix_vente: NumberLong(85000000),
   date_annonce: ISODate('2024-01-20T09:15:49.668Z'),
   detailvoiture: {
+    model: "Toyota Fortuner",
     matricule: "BCD789",
     kilometrage: NumberLong(1000),
     marque: "Toyota",
@@ -576,11 +595,11 @@ db.infoannonce.insertOne({
   ],
   photos: [
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/13221555-da78-4275-8478-61bc3bea3e0e.jpeg?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/Toyota-Fortuner-1.png?alt=media",
       contentType: "image/jpeg"
     },
     {
-      data: "https://firebasestorage.googleapis.com/v0/b/istock-3c7b6.appspot.com/o/37ff8133-91a7-462a-b700-32fa0ac19f48.jpg?alt=media",
+      data: "https://firebasestorage.googleapis.com/v0/b/istock-e6b85.appspot.com/o/Toyota-Fortuner-2.jpg?alt=media",
       contentType: "image/jpeg"
     }
   ]

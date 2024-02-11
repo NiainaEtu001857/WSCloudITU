@@ -71,22 +71,13 @@ public class AnnonceController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("filtre")
-    public ResponseEntity<Response> getAllInfoAnnonceByFiltre(@RequestBody FiltreAnnonce filtre,
-            @RequestHeader("Authorization") String authorizationHeader) {
+    @PostMapping("filtre")
+    public ResponseEntity<Response> getAllInfoAnnonceByFiltre(@RequestBody FiltreAnnonce filtre) {
         Response response = new Response();
-        try {
-            tokenService.checkSansRole(authorizationHeader);
-            response.setStatus_code("200");
-            response.setData(infoAnnonceService.getInfoAnnonceByFiltre(filtre));
-            response.setMessage("réussi");
-            return new ResponseEntity<>(response, HttpStatus.OK);
-
-        } catch (TokenException e) {
-            response.setStatus_code(e.getStatus_code());
-            response.setMessage(e.getMessage());
-            return new ResponseEntity<>(response, e.getStatus());
-        }
+        response.setStatus_code("200");
+        response.setData(infoAnnonceService.getInfoAnnonceByFiltre(filtre));
+        response.setMessage("réussi");
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 
@@ -109,21 +100,26 @@ public class AnnonceController {
     }
 
     @GetMapping("/valide")
-    public ResponseEntity<Response> getAllAuthorizedAnnonces(
-            @RequestHeader("Authorization") String authorizationHeader) {
+    public ResponseEntity<Response> getAllAuthorizedAnnonces() {
         Response response = new Response();
-        try {
-            tokenService.checkSansRole(authorizationHeader);
-            response.setStatus_code("200");
-            response.setData(infoAnnonceService.getAllAuthorizedAnnonces());
-            response.setMessage("réussi");
-            return new ResponseEntity<>(response, HttpStatus.OK);
-
-        } catch (TokenException e) {
-            response.setStatus_code(e.getStatus_code());
-            response.setMessage(e.getMessage());
-            return new ResponseEntity<>(response, e.getStatus());
-        }
+        /*
+         * try {
+         * tokenService.checkSansRole(authorizationHeader);
+         * response.setStatus_code("200");
+         * response.setData(infoAnnonceService.getAllAuthorizedAnnonces());
+         * response.setMessage("réussi");
+         * return new ResponseEntity<>(response, HttpStatus.OK);
+         * 
+         * } catch (TokenException e) {
+         * response.setStatus_code(e.getStatus_code());
+         * response.setMessage(e.getMessage());
+         * return new ResponseEntity<>(response, e.getStatus());
+         * }
+         */
+        response.setStatus_code("200");
+        response.setData(infoAnnonceService.getAllAuthorizedAnnonces());
+        response.setMessage("réussi");
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 
@@ -315,9 +311,9 @@ public class AnnonceController {
             vente.setTaux_comission(comisssionservice.getComissionlast());
             annonceService.vendu(vente.getAnnonce_id());
             infoAnnonceService.updateStatutByAnnonceId(vente.getAnnonce_id().toString(), (long) 3);
-            venteService.newVente(vente);
             response.setStatus_code("200");
             response.setMessage("update réussi");
+            response.setData(venteService.newVente(vente));
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (TokenException e) {
             response.setStatus_code(e.getStatus_code());

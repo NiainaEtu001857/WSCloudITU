@@ -1,7 +1,8 @@
 \c postgres;
 drop database vehicule;
-create database vehicule;
-\c vehicule;
+create database vehicule2;
+\c vehicule2;
+
 
 create table token(
     id_token serial primary key,
@@ -9,6 +10,12 @@ create table token(
     cle text not null,
     date_creation date not null,
     date_expiration date not null
+);
+
+create table tokenmobile(
+    id_tokenmobile serial primary key,
+    tokenmobile text not null,
+    utilisateur_id int references utilisateur(id_utilisateur)
 );
 
 create table comission(
